@@ -1,0 +1,21 @@
+{
+    "manifest_version": 3,
+    "name": "Consentomatic",
+    "version": "1.0",
+    "background": {
+        "service_worker": "background.js"
+    },
+    "description": "Une simple extension pour Chrome",
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "icons/icon16.png"
+      }
+    },
+    "permissions": [
+      "storage",
+      "activeTab"
+    ]
+
+  }
+  
