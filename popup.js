@@ -2,7 +2,9 @@ document.getElementById("mon-bouton").addEventListener("click", async function()
   chrome.tabs.query({active: true, currentWindow: true}, async function(tabs) {
       if (tabs.length > 0) {
           const activeTab = tabs[0].id;
-          console.log(tabs.length);
+
+
+          console.log("execution");
           // Exécution du script après le délai
           chrome.scripting.executeScript({
             target: {tabId: activeTab},
@@ -23,18 +25,15 @@ document.getElementById("mon-bouton").addEventListener("click", async function()
 
 function detectCookieBanners() {
   console.log("Détection des bannières de cookies dans la page...");
-  const banners = document.querySelectorAll('div, p, span, button, a');
-  console.log(banners.length);
+  const banners = document.querySelectorAll('div, p, span');
   banners.forEach(banner => {
-      //console.log("banner")
       if (banner.textContent.toLowerCase().includes('cookies')) {
-          const acceptButton = banner.querySelectorAll('button, a, span, div, p');
-          acceptButton.forEach(btn => {
-            if ( btn.textContent.toLowerCase().includes("accepter")) {
-              btn.click();
-              //console.log('Bouton "Accepter" cliqué.');
+          //console.log('Bannière de cookies détectée :', banner);
+          const acceptButton = banner.querySelector('button, a');
+          if (acceptButton && acceptButton.textContent.toLowerCase().includes("les")) {
+              acceptButton.click();
+              console.log('Bouton "Accepter" cliqué.');
           }
-          })
       }
   });
 }
