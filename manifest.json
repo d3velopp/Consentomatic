@@ -5,13 +5,17 @@
   "permissions": [
     "scripting",
     "storage",
+<<<<<<< Updated upstream
+=======
+    "tabs",
+>>>>>>> Stashed changes
     "activeTab"
   ],
   "host_permissions": [
     "<all_urls>"
   ],
   "background": {
-    "service_worker": "background.js"
+  "service_worker": "js/background.js"
   },
   "action": {
     "default_popup": "popup.html",

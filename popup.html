@@ -2,10 +2,50 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Cookie Banner Detector</title>
-  <script src="popup.js" defer></script>
+  <title>Popup</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="./css/popup.css" rel="stylesheet">
 </head>
 <body>
-  <button id="mon-bouton">Détecter les bannières de cookies</button>
+  <h1 class="title">⭐Consentomatic⭐</h1>
+
+    <div class="cookie-container">
+        <p class="cookie_performance">Cookie de performance</p>
+        <label class="switch accept_mode, performance_switch">
+            <input type="checkbox">
+            <span class="slider round"></span>
+        </label>
+    </div>
+
+    <div class="cookie-container">
+        <p class="cookie_fonctionnalite">Cookie de fonctionnalité</p>
+        <label class="switch accept_mode, fonctionnalite_switch">
+            <input type="checkbox">
+            <span class="slider round"></span>
+        </label>
+    </div>
+
+    <div class="cookie-container">
+        <p class="cookie_marketing">Cookie de ciblage marketing</p>
+        <label class="switch accept_mode, marketing_switch">
+            <input type="checkbox">
+            <span class="slider round"></span>
+        </label>
+    </div>
+
+    <div class="cookie-container">
+    <p class="cookie_others">Cookies inconnus (autres)</p>
+    <label class="switch accept_mode, others_switch">
+        <input type="checkbox">
+        <span class="slider round"></span>
+    </label>
+    </div>
+
+    <button id="modeButton" class="mode-auto">Mode Auto</button>
+
+    <script src="./js/slider_query.js"></script>
+    <script src="./js/button_toggle.js"></script>
+    <script src="./js/background.js"></script>
+    <script src="./js/popup.js"></script>
 </body>
 </html>
