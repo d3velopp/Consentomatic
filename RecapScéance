@@ -1,0 +1,19 @@
+Julian : 
+- Changement méthode d'affichage frontend de l'extension 
+- Intégration du programme dans la GUI
+- Mise en place du système de sauvegarde 
+
+Leandro : 
+- Icons
+- Système de sauvegarde
+- Lancement du script au démarrage
+- énumération des critères d'analyse
+
+Titouan : 
+- Réorganisation de l'algorithme 
+- ajout de fonctionalité mineures
+
+Léopold : 
+- Création du 1er algorithme fonctionnel pour l'autoclick  
+- Tentative d'ajout d'algorithme récursif dans le code
+- Réorganisation du code
