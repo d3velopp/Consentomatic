@@ -22,19 +22,38 @@ document.getElementById("mon-bouton").addEventListener("click", async function()
 });
 
 function detectCookieBanners() {
-  console.log("Détection des bannières de cookies dans la page...");
-  const banners = document.querySelectorAll('div, p, span, button, a');
-  console.log(banners.length);
+
+  function getBanners(){
+    //return all banners containing the word "cookie"
+    console.log("Détection des bannières de cookies dans la page...");
+    const banners = document.querySelectorAll('div, p, span, button, a');
+    //console.log(banners.length);
+    return banners
+  }
+
+  function clickAcceptButton(banner){
+    done = false;
+    const buttons = banner.querySelectorAll('button, a, span');
+    buttons.forEach(button => {
+      if ( done != true && button.textContent.toLowerCase().includes("accept")) {
+        button.click();
+        console.log("Bouton Accepter cliqué");
+        done = true;
+      }
+    });
+    return done;
+  }
+
+  done = false;
+  banners=getBanners()
   banners.forEach(banner => {
-      //console.log("banner")
-      if (banner.textContent.toLowerCase().includes('cookies')) {
-          const acceptButton = banner.querySelectorAll('button, a, span, div, p');
-          acceptButton.forEach(btn => {
-            if ( btn.textContent.toLowerCase().includes("accepter")) {
-              btn.click();
-              //console.log('Bouton "Accepter" cliqué.');
-          }
-          })
+      console.log("banner")
+      //seach for the cookie banner div
+      if ( done != true && banner.textContent.toLowerCase().includes('cookies')) {
+        console.log("cookie banner");
+        //now we are in the cookie banner div
+        done = clickAcceptButton(banner); //get the accept button and click
       }
   });
+
 }
