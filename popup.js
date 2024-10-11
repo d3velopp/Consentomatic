@@ -1,4 +1,4 @@
-document.getElementById("mon-bouton").addEventListener("click", async function() {
+wodocument.getElementById("mon-bouton").addEventListener("click", async function() {
   chrome.tabs.query({active: true, currentWindow: true}, async function(tabs) {
       if (tabs.length > 0) {
           const activeTab = tabs[0].id;
@@ -83,7 +83,7 @@ function Consentomatic() {
       if ( done != true ) {
         const buttons = cookieBanner.querySelectorAll('button, a, span');
         buttons.forEach(button => {
-          if (keyWordIsIncluded(AcceptButtonKeyWords, button) && button.textContent.length<60) {
+          if (keyWordIsIncluded(keyWord_list, button) && button.textContent.length<60) {
             button.click();
             done = true;
             console.log("Bouton cliqué");
