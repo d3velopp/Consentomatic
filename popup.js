@@ -33,23 +33,22 @@ function Consentomatic() {
   function keyWordIsIncluded(keyword_list, element) {
     result = false;
     keyword_list.forEach(keyword => {
-      if ( element.textContent.toLowerCase().includes(keyword) ) {
+      if (element.textContent.toLowerCase().includes(keyword)) {
         result = true;
       }
     });
     return result;
   }
 
-  function getCookieDivs(){ //RETURN COOKIE DIVS WITHOUT PARENT DIVS.
+  function getCookieDivsLargeResearch(){ //RETURN COOKIE DIVS WITHOUT PARENT DIVS.
     console.log("Détection des bannières de cookies dans la page...");
     //get all elements of the page
     const divs = document.querySelectorAll('div');
     const cookieDivs = [];
-    console.log(divs.length);
     //get all elements containing the word "cookie"
     divs.forEach(element => {
       //seach for the cookie banner div
-      if ( keyWordIsIncluded(CookieBannerKeyWords, element) ) {
+      if (element.innerHTML.toLowerCase().includes("cookie")) {
         console.log("cookie banner");
         cookieDivs.push(element);
       }
@@ -58,7 +57,7 @@ function Consentomatic() {
     const elementToDelete = [];
     cookieDivs.forEach(element => {
       for (const child of element.children) {
-        if ( cookieDivs.includes(child)  && !(elementToDelete.includes(element)) ) {
+        if (cookieDivs.includes(child)  && !(elementToDelete.includes(element))) {
           elementToDelete.push(element);
           console.log("delete parent");
         }
@@ -67,27 +66,60 @@ function Consentomatic() {
     elementToDelete.forEach(element => {
       cookieDivs.pop(element);
     });
-    console.log(cookieDivs.length);
-    cookieDivs.forEach(div => {
-      console.log(div.textContent);
+    console.log("Nombre de Divs selectionnées :",cookieDivs.length);
+    return cookieDivs;
+  }
+
+  function getCookieDivs(){ //RETURN COOKIE DIVS WITHOUT PARENT DIVS.
+    console.log("Détection des bannières de cookies dans la page...");
+    //get all elements of the page
+    const divs = document.querySelectorAll('div');
+    const cookieDivs = [];
+    //get all elements containing the word "cookie"
+    divs.forEach(element => {
+      //seach for the cookie banner div
+      if (keyWordIsIncluded(CookieBannerKeyWords, element)) {
+        console.log("cookie banner");
+        cookieDivs.push(element);
+      }
     });
+    //get the element of the list that is at the maximal depth.
+    const elementToDelete = [];
+    cookieDivs.forEach(element => {
+      for (const child of element.children) {
+        if (cookieDivs.includes(child)  && !(elementToDelete.includes(element))) {
+          elementToDelete.push(element);
+          console.log("delete parent");
+        }
+      }
+    });
+    elementToDelete.forEach(element => {
+      cookieDivs.pop(element);
+    });
+    console.log("Nombre de Divs selectionnées :",cookieDivs.length);
     return cookieDivs;
   }
 
   function clickButton(role, cookieBanners){
-    if (role == "ACCEPTER") { keyWord_list = AcceptButtonKeyWords; }
-    if (role == "REFUSER") { keyWord_list = DenyButtonKeyWords; }
     done = false;
     cookieBanners.forEach(cookieBanner => {
       //seach for the cookie banner div
-      if ( done != true ) {
+      if (done != true) {
         const buttons = cookieBanner.querySelectorAll('button, a, span');
         buttons.forEach(button => {
-          if (keyWordIsIncluded(AcceptButtonKeyWords, button) && button.textContent.length<60) {
-            button.click();
-            done = true;
-            console.log("Bouton cliqué");
-            console.log(button.textContent);
+          if (role == "ACCEPTER") {
+            if (keyWordIsIncluded(AcceptButtonKeyWords, button) && button.textContent.length<100 && !(keyWordIsIncluded(DenyButtonKeyWords, button))) { //le 3e test est pour s'assurer que "continuer sans accepter" ne soit pas detecté.
+              button.click();
+              done = true;
+              console.log("Bouton ACCEPTER cliqué :", button.textContent);
+            }
+          }
+          else if (role == "REFUSER") {
+            if (keyWordIsIncluded(DenyButtonKeyWords, button) && button.textContent.length<100) {
+              button.click();
+              done = true;
+              console.log("Bouton REFUSER cliqué :", button.textContent);
+            }
           }
         });
       }
@@ -95,26 +127,16 @@ function Consentomatic() {
     return done;
   }
 
-  function widthSearchWithChildren(cookieDivs){
-    const sameOrLowerDepthElements = [];
-    cookieDivs.forEach(element => {
-      parent=element.parent;
-      for (const child of element.children) {
-        sameOrLowerDepthElements.push(element);
-      }
-    });
-    cookieDivs.forEach(cookieBanner => {
-      for (const child of element.children) {
-        cookieDivs.push(child);
-      }
-    });
-    return sameOrLowerDepthElements;
-  }
+  
 
   done = false;
   done = clickButton("ACCEPTER", getCookieDivs());
-  if (done) {
-    console.log("Terminé.");
+  if (done) { console.log("Terminé."); }
+  else {
+    console.log("Recherche Elargie...");
+    done = clickButton("ACCEPTER", document.querySelectorAll('div, button, a, span'));
+    if (done) { console.log("Terminé."); }
+    else { console.log("Echec."); }
   }
 
 }
