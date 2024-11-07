@@ -1,0 +1,22 @@
+{
+  "name": "Détection des Bannières de Cookies",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": [
+    "scripting",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts":[{
+    "all_frames": true
+  }]
+  
+}
