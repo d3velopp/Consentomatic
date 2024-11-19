@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     const cookieSwitch = document.querySelector(".Cookie_Switch input"); 
+    const cookieSwitchTextElement = document.querySelector(".Cookie_Switch");
     //When checked => Role=DENY
     //When unchecked => Role=ACCEPT
 
@@ -9,35 +10,36 @@ document.addEventListener("DOMContentLoaded", function() {
     chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
         if(msg.type === 'CONSENTOMATIC:SetPopupStatus=ACCEPT') {
             console.log("CONSENTOMATIC:SetPopupStatus=ACCEPT");
-            document.querySelector(".Cookie_Switch input").checked=false;
-            updateElement(cookieSwitch, document.querySelector(".Cookie_Switch"));
+            cookieSwitch.checked=false;
+            updateCookieSwitch();
         }
     });
 
     chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
         if(msg.type === 'CONSENTOMATIC:SetPopupStatus=DENY') {
             console.log("CONSENTOMATIC:SetPopupStatus=DENY");
-            document.querySelector(".Cookie_Switch input").checked=true;
-            updateElement(cookieSwitch, document.querySelector(".Cookie_Switch"));
+            cookieSwitch.checked=true;
+            updateCookieSwitch();
         }
     });
 
     // Initial state
-    updateElement(cookieSwitch, document.querySelector(".Cookie_Switch"));
+    updateCookieSwitch();
 
     cookieSwitch.addEventListener("change", function() {
-        const cookieText = document.querySelector(".Cookie_Switch");
-        updateElement(cookieSwitch, cookieText);
+        updateCookieSwitch();
     });
 
-    function updateElement(switchElement, textElement) {
-        if (!switchElement.checked) {
-            textElement.classList.remove("text-red");
-            textElement.classList.add("text-green");
+    function updateCookieSwitch() {
+        if (!cookieSwitch.checked) {
+            cookieSwitchTextElement.classList.remove("text-red");
+            cookieSwitchTextElement.classList.add("text-green");
+            cookieSwitchTextElement.textContent="Cookies (accepter tout)";
             chrome.runtime.sendMessage({type:'CONSENTOMATIC:SetROLE=ACCEPT'}); //change role to accept
         } else {
-            textElement.classList.remove("text-green");
-            textElement.classList.add("text-red");
+            cookieSwitchTextElement.classList.remove("text-green");
+            cookieSwitchTextElement.classList.add("text-red");
+            cookieSwitchTextElement.textContent="Cookies (refuser tout)";
             chrome.runtime.sendMessage({type:'CONSENTOMATIC:SetROLE=DENY'}); //change role to deny
         }
     }

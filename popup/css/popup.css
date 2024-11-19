@@ -11,7 +11,7 @@ body {
     align-items: center;
     text-align: justify;
     color: white;
-    background-color: rgb(0, 15, 26);
+    background-color: rgb(0, 20, 34);
 }
 
 .title {
@@ -29,7 +29,7 @@ body {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 25px;
     background-color: seashell;
     border-radius: 10px; /* Ajoute des coins arrondis */
     padding: 10px; /* Ajoute un peu de padding pour un meilleur espacement */
@@ -66,8 +66,8 @@ body {
     right: 0;
     bottom: 0;
     background-color: greenyellow;
-    -webkit-transition: .4s;
-    transition: .4s;
+    -webkit-transition: .2s;
+    transition: .2s;
     border-radius: 20px; /* Adjusted for smaller size */
 
   }
@@ -80,8 +80,8 @@ body {
     left: 2px;
     bottom: 2px;
     background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
+    -webkit-transition: .2s;
+    transition: .2s;
     border-radius: 50%;
   }
   
