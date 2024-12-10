@@ -151,3 +151,10 @@ input:checked + .slider:before {
   opacity: 0.5;
   pointer-events: none;
 }
+
+.basic-text {
+  color:black;
+}
+.hidden {
+  display: none;
+}

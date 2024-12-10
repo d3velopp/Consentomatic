@@ -7,6 +7,13 @@
 document.addEventListener("DOMContentLoaded", function() {
     const cookieSwitch = document.querySelector(".Cookie_Switch input"); 
     const cookieSwitchTextElement = document.querySelector(".Cookie_Switch");
+    const advancedParameter = document.querySelector(".advanced_settings");
+    const parameters = document.querySelector(".parameters")
+
+    const cookieSession = document.querySelector(".cookieSession");
+    const cookiePerformance = document.querySelector(".cookiePerformance");
+    const cookieFonctionnalite = document.querySelector(".cookieFonctionnalite");
+    const cookiePub = document.querySelector(".cookiePub");
     //When checked => Role=DENY
     //When unchecked => Role=ACCEPT
 
@@ -37,6 +44,10 @@ document.addEventListener("DOMContentLoaded", function() {
         else { chrome.runtime.sendMessage({type:'CONSENTOMATIQUE:SetROLE=ACCEPT'}); } //change role to accept
     });
 
+    advancedParameter.addEventListener("change", function() {
+        updateAdvancedParameter();
+    });
+
     function updateCookieSwitch() {
         //function that update the cookie switch style
         if (!cookieSwitch.checked) {
@@ -47,6 +58,18 @@ document.addEventListener("DOMContentLoaded", function() {
             cookieSwitchTextElement.classList.remove("text-green");
             cookieSwitchTextElement.classList.add("text-red");
             cookieSwitchTextElement.textContent="Cookies (refuser tout)";
+        }
+    }
+
+    function  updateAdvancedParameter() {
+        if (advancedParameter.checked) {
+            advancedParameter.checked = false;
+            parameters.classList.add("hidden");
+            //console.log("hidden activate");
+        } else {
+            advancedParameter.checked = true;
+            parameters.classList.remove("hidden");
+            //console.log("hidden deactivate");
         }
     }
 });

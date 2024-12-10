@@ -5,7 +5,7 @@
 //background.js
 
 try {
-    importScripts('./consentomatique.js', './domain.js', './role.js', './history.js');
+    importScripts('./consentomatique.js', './domain.js', './role.js', './history.js', './advancedParameter.js');
 } catch (e) {
     console.error(e);
 }
@@ -18,6 +18,7 @@ chrome.runtime.onInstalled.addListener(() => { //initialisation
     setRole("DENY");
     clearHistory();
     facultativeLog("Background worker initialized");
+    
 });
 
 //#########################################################################
