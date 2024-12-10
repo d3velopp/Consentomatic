@@ -10,12 +10,12 @@ async function getHistory() {
     return tmp.Consentomatic_HISTORY;
 }
 
-async function addToHistory(domain, success, role) {
+async function addToHistory(domain, success, role, buttonText) {
     //async function that add the given values to the history variable in local storage.
     history = await getHistory();
     history.unshift([domain, success, role]); //add the new line at the begenning of the array.
     chrome.storage.local.set({ Consentomatic_HISTORY: history });
-    facultativeLog("Added to History : " + domain + " : " + success + " : " + role);
+    facultativeLog("Added to History : " + domain + " : " + success + " : " + role + " : " + buttonText);
 }
 
 function clearHistory() {

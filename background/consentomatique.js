@@ -18,7 +18,7 @@ async function start_consentomatique(tabID, role, delay) {
 }
 
 function consentomatique(role) {
-    //main function of the Consentomatic, that we inject on the tab.
+    //main function of the Consentomatique, that we inject on the tab.
     //Gets the buttons, analyse the Style and click the buttons following the given role.
 
     function getAllButtons() {
@@ -31,7 +31,7 @@ function consentomatique(role) {
         //FR 
         const AcceptKeyWordsFR = ['autoriser','continuer','accord','comprend', 'accepte']; //identify accept button.
         const WrongAcceptKeyWordsFR = ['?', 'sans', 'désactiver', 'seulement', 'uniquement']; //keywords that might trick our program.
-        const DenyKeyWordsFR = ['refuser', 'refuse', 'sans accepter', 'rejeter', 'interdire', 'nécessaire', 'seulement']; //identify reject button.
+        const DenyKeyWordsFR = ['refuser', 'refuse', 'sans accepter', 'rejeter', 'interdire', 'nécessaire', 'seulement', 'non']; //identify reject button.
         const SubscribeToDenyKeyWordsFR = ['abonner', 'payer'];
         const CustomiseKeyWordsFR = ['options', 'gérer', 'configure', 'paramétrer', 'paramètre', 'choisi', 'personnaliser', 'réglages', 'préférences']; //identify customise button.
         //EN
@@ -228,11 +228,11 @@ function consentomatique(role) {
 
         Array.prototype.clickButtons = function() {
             //Method to click each buttons of the array.
-            var buttonText = [];
+            var buttonText = "";
             this.forEach(button => {
-                button.click();
                 console.log("BUTTON CLICKED : ", button.textContent, button);
-                buttonText.push(button.textContent);
+                buttonText = buttonText.concat(button.textContent);
+                button.click();
                 //if (button.checkVisibility()) { //if the button is still visible, then it was not clicked. Lets try to click on it's position.
                 if (true) {   
                     const rect = button.getBoundingClientRect();
@@ -295,7 +295,7 @@ function consentomatique(role) {
 
     //Execution of the function :
     var status = ["FAILURE"];
-    var clickedButtonText;
+    var clickedButtonText = "";
     var [acceptButtons, denyButtons, customiseButtons] = getAllButtons();
     
     //Call AnalyseCSS here.
@@ -313,5 +313,5 @@ function consentomatique(role) {
             status = "SUCCESS";
         }
     }
-    return status;
+    return [status, window.location.host, clickedButtonText];
 }

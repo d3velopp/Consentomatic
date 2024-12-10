@@ -38,17 +38,30 @@ chrome.runtime.onMessage.addListener(async (msg, sender, sendResponse) => {
                 var keepCalling = true;
                 var success = false;
                 var loopAfterSuccess = 0;
+                var buttonText = [];
+                var resultDomain = "";
                 importantLog("Executing Consentomatique on " + domain);
-                setTimeout(() => keepCalling=false, 20*1000); //keepCalling stays true for 20 seconds.
+                setTimeout(() => keepCalling=false, 15*1000); //keepCalling stays true for 20 seconds.
                 while (keepCalling && loopAfterSuccess < 10) {
                     if (success) loopAfterSuccess++;
                     results = await start_consentomatique(tabs[0].id, role, 50);
-                    results.forEach((result) => success=(result.result=="SUCCESS" || success)); //test if the result of the main function is "SUCCESS"
+                    // console.log(results);
+                    results.forEach((result) => {
+                        if (result!=null){
+                            console.log("r:", result);
+                            success=(result.result[0]=='SUCCESS' || success) //test if the result of the main function is "SUCCESS"
+                            if (result.result[0]=='SUCCESS' && !buttonText.includes(result.result[2])) buttonText.push(result.result[2])
+                            if (result.result[0]=='SUCCESS') resultDomain = result.result[1];
+                        }
+                    });
                 }
-                if (success) { success="SUCCESS" }
-                else { success="FAILURE" }
-                importantLog(domain + " : " + success + " : " + role);
-                addToHistory(domain, success, role);
+                if (success) { 
+                    success="SUCCESS";
+                    domain=resultDomain;
+                }
+                else success="FAILURE"
+                importantLog(domain + " : " + success + " : " + role + " : " + buttonText);
+                addToHistory(domain, success, role, buttonText);
             }
         });
     }
