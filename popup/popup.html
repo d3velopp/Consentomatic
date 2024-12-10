@@ -1,0 +1,33 @@
+<!-- 
+//Project Consentomatic
+//STI INSA Centre-Val de Loire, 2024-2025.
+//Titouan GODARD, Léopold MOSSER, Julian HOURNON, Léandro DOS SANTOS.
+
+//popup.html
+-->
+
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Popup</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <link href="./css/popup.css" rel="stylesheet">
+    </head>
+    <body>
+        <!-- Drapeau Français en haut de la popup -->
+        <img class="french_flag" src="./assets/flag.png" width=100% height=14px>
+        <!-- Logo Informations avec lien vers la page d'informations -->
+        <a class="info_button" href="./info.html"><img src="./assets/info.png" title="Plus d'informations" width=25px height=20px></a>
+        <h1 class="title">Consentomatique</h1>
+        <!-- Switch sur les cookies : Reglage du rôle (accepter tout ou refuser tout)-->
+        <div class="cookie-container">
+            <p class="Cookie_Switch">Cookies </p><!-- Texte Dynamique, voir updateCookieSwitch() dans popup.js -->
+            <label class="switch accept_mode, Cookie_Switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <script src="./popup.js"></script>
+    </body>
+</html>
